@@ -1,5 +1,6 @@
 import { Menu, School2 } from "lucide-react";
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Sheet,
   SheetContent,
@@ -23,11 +24,10 @@ import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Button } from "@/components/ui/button";
 import DarkMode from "@/DarkMode";
  
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+
 import { Separator } from "@radix-ui/react-dropdown-menu";
 const Navbar = () => {
-  let user = false;
+  let user = true;
   const role = "instructor";
   
   return (
@@ -53,8 +53,8 @@ const Navbar = () => {
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
-                <DropdownMenuItem>My learning</DropdownMenuItem>
-                <DropdownMenuItem>Edit Profile</DropdownMenuItem>
+                <DropdownMenuItem> <Link to="/Mylearning">My learning</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link to="/profile">edit profile</Link></DropdownMenuItem>
               </DropdownMenuGroup>
 
               <DropdownMenuItem>Log out</DropdownMenuItem>
@@ -98,11 +98,11 @@ const MobileNavBar =()=>{
         </SheetHeader>
         <Separator className="mr-2" />
           <nav className="flex flex-col  space-y-4">
-            <span>My learning</span>
+            <Link to="/Mylearning">My learning</Link>
             <span>Edit Profile</span>
             <span>Log out</span>
             {role==="instructor" && (
-              <SheetFooter>
+              <SheetFooter>  
                 <SheetClose asChild>
                   <Button variant="outline" type="submit">Dashboard</Button>
                 </SheetClose>

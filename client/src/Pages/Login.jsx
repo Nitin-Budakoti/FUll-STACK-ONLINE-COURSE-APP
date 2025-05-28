@@ -17,8 +17,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [LoginInput, setLoginInput] = useState({ email: "", password: "" });
   const [SignupInput, setSignupinput] = useState({
     name: "",
@@ -74,6 +76,7 @@ useEffect(() => {
   }
   if (loginIsSuccess && loginData) {
     toast.success(loginData.Message || "Login successfully.");
+    navigate("/");
   }
 }, [
   loginIsSuccess,
