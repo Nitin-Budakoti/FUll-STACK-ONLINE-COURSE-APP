@@ -4,15 +4,25 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
+import Course from "./Course";
+import { useLoaduserQuery } from "@/features/api/authapi";
 const Profile = () => {
     const isloading=false;
-  return (
+    const enrolledCourses = [1];
+    const {data,isLoading} =useLoaduserQuery();
+    if(isLoading){
+      return <div>Loading...</div>
+    }
+    const {user} = data;
+  
+    
+    return (
     <div className="max-w-4xl mx-auto px-4 my-24">
       <h1 className="text-2xl font-bold text-center md:text-left">Profile</h1>
       <div className="flex flex-col md:flex-row items-center md:items-start gap-8 ">
         <div className="flex flex-col items-center">
           <Avatar className="h-32 w-32 mb-4 rounded-full">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src={user.photoURL || "https://github.com/shadcn.png"} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </div>
@@ -21,7 +31,7 @@ const Profile = () => {
             <h1 className="text-sm font-medium ">
               Name:
               <span className="font-normal text-gray-900 dark:text-gray-300 ml-2">
-                Manu Mern Stack
+                {user.name}
               </span>
             </h1>
           </div>
@@ -29,7 +39,7 @@ const Profile = () => {
             <h1  className="text-sm font-medium">
               Email:
               <span className="font-normal text-gray-900 dark:text-gray-300 ml-2">
-                manu@gmail.com
+              {user.email}
               </span>
             </h1>
           </div>
@@ -37,7 +47,7 @@ const Profile = () => {
             <h1 className="text-sm font-medium">
               Role:
               <span className="font-normal text-gray-900 dark:text-gray-300 ml-2">
-                Instructor
+                {user.role.toUpperCase()}
               </span>
             </h1>
           </div>
@@ -86,6 +96,18 @@ const Profile = () => {
                 </DialogContent>
           </Dialog>
         </div>
+      </div>
+      <div>
+        <h1 className="font-medium text-lg">Courses You have Enrolled</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-5">
+          {
+        user.enrolledCourses.length===0?(
+          <h1 className="text-gray-500">No courses enrolled</h1>
+        ):(
+          user.enrolledCourses.map((course)=><Course course={course} key ={course._id}/>)
+        )
+          }
+        </div> 
       </div>
     </div>
   );
